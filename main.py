@@ -4,7 +4,7 @@ import streamlit as st
 
 if __name__ == '__main__':
     st.title('Recomendação de filme')
-    texto_filme = st.text_input('Busque um filme')
+    texto_filme = st.text_input('Busque um filme (em ingles)')
     busca_filme = pesquisa_filme(texto_filme)
     filme_encontrado=''
     if texto_filme!='':
