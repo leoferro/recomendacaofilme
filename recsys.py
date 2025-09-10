@@ -7,19 +7,20 @@ from kagglehub import KaggleDatasetAdapter
 
 
 path = kagglehub.dataset_download("ashukr/movie-rating-data")
-
+print('dfrat')
 #Importação de dados
 #url = 'https://drive.google.com/file/d/18aipKx0BvJtmFNszS1jbwFZOOEgdrma4/view?usp=sharing'
 #url='https://drive.google.com/uc?id=' + url.split('/')[-2]
 #dfrat = pd.read_csv(url)
 dfrat = pd.read_csv(path+"/ratings.csv")
 
+print('dfmov')
 #url = 'https://drive.google.com/file/d/15h49XIuMDEtf5PAbNKFJ41vZgmSmjT3n/view?usp=sharing'
 #url='https://drive.google.com/uc?id=' + url.split('/')[-2]
 #dfmov = pd.read_csv(url)
 dfmov = pd.read_csv(path+"/movies.csv")
 
-
+print('usersfilter')
 users = dfrat.groupby('userId').agg(cnt = ('movieId','count' ))
 valor = users.cnt.quantile(.8)
 users = users[ users.cnt > valor]
@@ -27,12 +28,15 @@ users = users[ users.cnt > valor]
 
 dfrat = dfrat.merge(users, on = 'userId').drop('cnt', axis=1)
 #Criação da tabela de relação entre usuario filme e depois filme e filme
+
+print('pivot')
 df = pd.pivot_table(dfrat,
                     values= 'rating',
                     index = 'movieId',
                     columns = 'userId',
                     fill_value=0)
 
+print('coscene')
 cos = pd.DataFrame(cosine_similarity(df))
 cos.index=df.index
 cos.columns = df.index
