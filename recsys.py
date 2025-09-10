@@ -5,6 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import kagglehub
 from kagglehub import KaggleDatasetAdapter
 
+print('extract')
 
 path = kagglehub.dataset_download("ashukr/movie-rating-data")
 print('dfrat')
