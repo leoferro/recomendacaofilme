@@ -1,15 +1,31 @@
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
+
+import kagglehub
+from kagglehub import KaggleDatasetAdapter
+
+
+path = kagglehub.dataset_download("ashukr/movie-rating-data")
+
 #Importação de dados
-url = 'https://drive.google.com/file/d/18aipKx0BvJtmFNszS1jbwFZOOEgdrma4/view?usp=sharing'
-url='https://drive.google.com/uc?id=' + url.split('/')[-2]
-dfrat = pd.read_csv(url)
+#url = 'https://drive.google.com/file/d/18aipKx0BvJtmFNszS1jbwFZOOEgdrma4/view?usp=sharing'
+#url='https://drive.google.com/uc?id=' + url.split('/')[-2]
+#dfrat = pd.read_csv(url)
+dfrat = pd.read_csv(path+"\\ratings.csv")
 
-url = 'https://drive.google.com/file/d/15h49XIuMDEtf5PAbNKFJ41vZgmSmjT3n/view?usp=sharing'
-url='https://drive.google.com/uc?id=' + url.split('/')[-2]
-dfmov = pd.read_csv(url)
+#url = 'https://drive.google.com/file/d/15h49XIuMDEtf5PAbNKFJ41vZgmSmjT3n/view?usp=sharing'
+#url='https://drive.google.com/uc?id=' + url.split('/')[-2]
+#dfmov = pd.read_csv(url)
+dfmov = pd.read_csv(path+"\\movies.csv")
 
+
+users = dfrat.groupby('userId').agg(cnt = ('movieId','count' ))
+valor = users.cnt.quantile(.5)
+users = users[ users.cnt > valor]
+
+
+dfrat = dfrat.merge(users, on = 'userId').drop('cnt', axis=1)
 #Criação da tabela de relação entre usuario filme e depois filme e filme
 df = pd.pivot_table(dfrat,
                     values= 'rating',
