@@ -21,7 +21,7 @@ dfmov = pd.read_csv(path+"/movies.csv")
 
 
 users = dfrat.groupby('userId').agg(cnt = ('movieId','count' ))
-valor = users.cnt.quantile(.5)
+valor = users.cnt.quantile(.8)
 users = users[ users.cnt > valor]
 
 
