@@ -12,12 +12,12 @@ path = kagglehub.dataset_download("ashukr/movie-rating-data")
 #url = 'https://drive.google.com/file/d/18aipKx0BvJtmFNszS1jbwFZOOEgdrma4/view?usp=sharing'
 #url='https://drive.google.com/uc?id=' + url.split('/')[-2]
 #dfrat = pd.read_csv(url)
-dfrat = pd.read_csv(path+"\\ratings.csv")
+dfrat = pd.read_csv(path+"/ratings.csv")
 
 #url = 'https://drive.google.com/file/d/15h49XIuMDEtf5PAbNKFJ41vZgmSmjT3n/view?usp=sharing'
 #url='https://drive.google.com/uc?id=' + url.split('/')[-2]
 #dfmov = pd.read_csv(url)
-dfmov = pd.read_csv(path+"\\movies.csv")
+dfmov = pd.read_csv(path+"/movies.csv")
 
 
 users = dfrat.groupby('userId').agg(cnt = ('movieId','count' ))
